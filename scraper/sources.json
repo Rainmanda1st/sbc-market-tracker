@@ -50,10 +50,20 @@
     "source_type": "credential-free"
   },
   {
-    "name": "FriendlyELEC",
+    "name": "FriendlyELEC NanoPi",
     "region": "GLOBAL",
     "currency": "USD",
-    "url": "https://friendlyelec.com/",
+    "url": "https://www.friendlyelec.com/index.php?limit=100&order=DESC&route=product%2Fsearch&search=nanopi&sort=pd.name",
+    "adapter": "generic",
+    "max_pages": 2,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "FriendlyELEC NanoPC",
+    "region": "GLOBAL",
+    "currency": "USD",
+    "url": "https://www.friendlyelec.com/index.php?limit=100&order=DESC&route=product%2Fsearch&search=nanopc&sort=pd.name",
     "adapter": "generic",
     "max_pages": 2,
     "enabled": true,
