@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020">
+<title>SBC Market Tracker</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2c;--line:#2b3750;--text:#f3f4f6;--muted:#a7b0c0;--accent:#60a5fa;--good:#4ade80;--bad:#f87171}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:980px;margin:auto;padding:16px}h1{font-size:1.55rem;margin:.2rem 0}.sub{color:var(--muted);margin:.2rem 0 14px}.filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;background:var(--panel);border:1px solid var(--line);padding:12px;border-radius:14px}.filters label{font-size:.8rem;color:var(--muted)}input,select{width:100%;margin-top:3px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#0e1628;color:var(--text)}.wide{grid-column:1/-1}.stats{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{background:var(--panel);border:1px solid var(--line);padding:7px 10px;border-radius:999px;font-size:.85rem}.grid{display:grid;gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}.top{display:flex;justify-content:space-between;gap:8px}.name{font-weight:700}.price{font-size:1.25rem;font-weight:800;color:var(--accent)}.meta{color:var(--muted);font-size:.87rem;margin-top:6px}.tag{display:inline-block;border:1px solid var(--line);padding:3px 7px;border-radius:999px;margin:5px 4px 0 0;font-size:.75rem}.in{color:var(--good)}.out{color:var(--bad)}a{color:var(--accent)}button{border:0;border-radius:8px;background:var(--accent);color:#07111f;padding:8px 11px;font-weight:700}@media(min-width:720px){.filters{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body><main class="wrap"><h1>SBC Market Tracker</h1><p class="sub">Filter current SBC listings by price, architecture, niche, stock and retailer.</p>
+<section class="filters">
+<label class="wide">Search<input id="q" placeholder="Radxa, RK3588, Orange Pi…"></label>
+<label>Max price CAD<input id="max" type="number" min="0" placeholder="Any"></label>
+<label>Architecture<select id="arch"><option value="">Any</option><option>ARM64</option><option>RISC-V</option><option>x86</option></select></label>
+<label>Stock<select id="stock"><option value="">Any</option><option value="in">In stock</option><option value="out">Out of stock</option><option value="unknown">Unknown</option></select></label>
+<label>Niche<select id="niche"><option value="">Any</option></select></label>
+<label>Retailer<select id="retailer"><option value="">Any</option></select></label>
+<label>Condition<select id="condition"><option value="">Any</option><option>new</option><option>refurbished</option><option>used</option><option>open-box</option></select></label>
+<label>Region<select id="region"><option value="">Any</option></select></label>
+</section><div class="stats"><span class="chip" id="count">Loading…</span><span class="chip" id="updated"></span></div><section class="grid" id="grid"></section></main>
+<script>
+const $=id=>document.getElementById(id);let rows=[];
+function uniq(k){return [...new Set(rows.map(x=>x[k]).filter(Boolean))].sort()}
+function addOptions(id,vals){for(const v of vals){const o=document.createElement('option');o.value=o.textContent=v;$(id).appendChild(o)}}
+function money(x){if(x.price_cad!=null)return '$'+Number(x.price_cad).toFixed(2)+' CAD';return '$'+Number(x.price).toFixed(2)+' '+x.currency}
+function render(){const q=$('q').value.toLowerCase(),mx=Number($('max').value)||Infinity;let out=rows.filter(x=>(!q||JSON.stringify(x).toLowerCase().includes(q))&&(!x.price_cad||x.price_cad<=mx)&&(!$('arch').value||x.architecture===$('arch').value)&&(!$('stock').value||x.stock===$('stock').value)&&(!$('niche').value||x.niche===$('niche').value)&&(!$('retailer').value||x.retailer===$('retailer').value)&&(!$('condition').value||x.condition===$('condition').value)&&(!$('region').value||x.region===$('region').value));out.sort((a,b)=>(a.price_cad??1e9)-(b.price_cad??1e9));$('count').textContent=`${out.length} of ${rows.length} listings`;$('grid').innerHTML=out.map(x=>`<article class="card"><div class="top"><div><div class="name">${x.name}</div><div class="meta">${x.variant||''}</div></div><div class="price">${money(x)}</div></div><div><span class="tag ${x.stock}">${x.stock==='in'?'In stock':x.stock==='out'?'Out of stock':'Stock unknown'}</span><span class="tag">${x.architecture||'Unknown arch'}</span><span class="tag">${x.niche||'General'}</span><span class="tag">${x.condition||'new'}</span></div><div class="meta">${x.retailer||''} · ${x.region||''}${x.ram?' · '+x.ram:''}${x.soc?' · '+x.soc:''}</div><div class="meta">Checked ${x.checked_at?new Date(x.checked_at).toLocaleString():'unknown'}</div><p><a href="${x.url}" target="_blank" rel="noopener">Open listing</a></p></article>`).join('')||'<p>No listings match these filters.</p>'}
+(async()=>{try{const d=await fetch('data/market.json?'+Date.now());rows=d.listings||[];$('updated').textContent='Updated '+(d.updated_at?new Date(d.updated_at).toLocaleString():'unknown');addOptions('niche',uniq('niche'));addOptions('retailer',uniq('retailer'));addOptions('region',uniq('region'));document.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',render));render()}catch(e){$('count').textContent='Could not load market data';}})();
+</script></body></html>
