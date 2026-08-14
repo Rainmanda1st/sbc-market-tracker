@@ -1,0 +1,7 @@
+[
+  {"name":"ameriDroid","region":"US","currency":"USD","url":"https://ameridroid.com/collections/single-board-computer","adapter":"shopify"},
+  {"name":"RobotShop Canada","region":"CA","currency":"CAD","url":"https://ca.robotshop.com/collections/single-board-computers","adapter":"shopify"},
+  {"name":"PiShop.ca","region":"CA","currency":"CAD","url":"https://www.pishop.ca/product-category/raspberry-pi/raspberry-pi-boards/current-pi-boards/","adapter":"generic"},
+  {"name":"Pimoroni","region":"UK","currency":"GBP","url":"https://shop.pimoroni.com/collections/raspberry-pi","adapter":"shopify"},
+  {"name":"The Pi Hut","region":"UK","currency":"GBP","url":"https://thepihut.com/collections/raspberry-pi-computers","adapter":"shopify"}
+]
