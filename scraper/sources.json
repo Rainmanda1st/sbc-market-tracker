@@ -1,7 +1,102 @@
 [
-  {"name":"ameriDroid","region":"US","currency":"USD","url":"https://ameridroid.com/collections/single-board-computer","adapter":"shopify"},
-  {"name":"RobotShop Canada","region":"CA","currency":"CAD","url":"https://ca.robotshop.com/collections/single-board-computers","adapter":"shopify"},
-  {"name":"PiShop.ca","region":"CA","currency":"CAD","url":"https://www.pishop.ca/product-category/raspberry-pi/raspberry-pi-boards/current-pi-boards/","adapter":"generic"},
-  {"name":"Pimoroni","region":"UK","currency":"GBP","url":"https://shop.pimoroni.com/collections/raspberry-pi","adapter":"shopify"},
-  {"name":"The Pi Hut","region":"UK","currency":"GBP","url":"https://thepihut.com/collections/raspberry-pi-computers","adapter":"shopify"}
+  {
+    "name": "ameriDroid",
+    "region": "US",
+    "currency": "USD",
+    "url": "https://ameridroid.com/collections/single-board-computer",
+    "adapter": "shopify",
+    "max_pages": 2,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "PiShop.ca",
+    "region": "CA",
+    "currency": "CAD",
+    "url": "https://www.pishop.ca/product-category/raspberry-pi/raspberry-pi-boards/current-pi-boards/",
+    "adapter": "generic",
+    "max_pages": 3,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "The Pi Hut",
+    "region": "UK",
+    "currency": "GBP",
+    "url": "https://thepihut.com/collections/raspberry-pi-boards",
+    "adapter": "shopify",
+    "max_pages": 2,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "Pimoroni",
+    "region": "UK",
+    "currency": "GBP",
+    "url": "https://shop.pimoroni.com/collections/raspberry-pi",
+    "adapter": "shopify",
+    "max_pages": 4,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "Hardkernel / ODROID",
+    "region": "GLOBAL",
+    "currency": "USD",
+    "url": "https://www.hardkernel.com/product-category/odroid-board/",
+    "adapter": "generic",
+    "max_pages": 4,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "FriendlyELEC",
+    "region": "GLOBAL",
+    "currency": "USD",
+    "url": "https://friendlyelec.com/",
+    "adapter": "generic",
+    "max_pages": 2,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "PINE64",
+    "region": "GLOBAL",
+    "currency": "USD",
+    "url": "https://pine64.com/product-category/single-board-computers/",
+    "adapter": "generic",
+    "max_pages": 3,
+    "enabled": true,
+    "source_type": "credential-free"
+  },
+  {
+    "name": "RobotShop Canada",
+    "region": "CA",
+    "currency": "CAD",
+    "url": "https://ca.robotshop.com/collections/single-board-computers",
+    "adapter": "generic",
+    "enabled": false,
+    "source_type": "public-blocked",
+    "disabled_reason": "Collection data is dynamically loaded and the Shopify product feed returns HTTP 403 from GitHub Actions. Reserved for a future stable public-feed adapter."
+  },
+  {
+    "name": "Amazon.ca",
+    "region": "CA",
+    "currency": "CAD",
+    "adapter": "amazon-paapi",
+    "enabled": false,
+    "source_type": "credential-required",
+    "required_secrets": ["AMAZON_ACCESS_KEY", "AMAZON_SECRET_KEY", "AMAZON_PARTNER_TAG"],
+    "disabled_reason": "Reserved integration point. Credential use is intentionally disabled for now."
+  },
+  {
+    "name": "AliExpress",
+    "region": "GLOBAL",
+    "currency": "USD",
+    "adapter": "aliexpress-open-platform",
+    "enabled": false,
+    "source_type": "credential-required",
+    "required_secrets": ["ALIEXPRESS_APP_KEY", "ALIEXPRESS_APP_SECRET"],
+    "disabled_reason": "Reserved integration point. Credential use is intentionally disabled for now."
+  }
 ]
